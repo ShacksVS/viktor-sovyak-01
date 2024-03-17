@@ -8,6 +8,7 @@ def get_user_input():
     Returns:
         str: The input entered by the user.
     """
+    return input("Enter user's input: ")
 
 
 def read_input_file(filename):
@@ -20,6 +21,12 @@ def read_input_file(filename):
     Returns:
         list: A list of strings representing the lines read from the file.
     """
+    try:
+        with open(filename, 'r') as file:
+            lines = file.readlines()
+        return lines
+    except FileNotFoundError:
+        return "File not found"
 
 
 def read_input_file_pandas(filename):
@@ -33,3 +40,12 @@ def read_input_file_pandas(filename):
         pandas.DataFrame or None: A DataFrame containing the contents of the file,
                                   or None if the file is not found.
     """
+    try:
+        dataframe = pd.read_csv(filename)
+        return dataframe
+    except FileNotFoundError:
+        print(f'CSV file with path {filename} can\'t be found')
+        return None
+    except pd.errors.EmptyDataError:
+        print(f'CSV file with path {filename} is empty')
+        return None
